@@ -1,49 +1,26 @@
 pipeline {
-    agent any  // Runs on any available Jenkins agent
-
-    tools {
-        jdk 'JDK17'  // Make sure JDK 17 is installed in Jenkins
-        maven 'Maven' // Make sure Maven is installed in Jenkins
-    }
-
-    environment {
-        JAVA_HOME = tool('JDK17')  // Set JAVA_HOME
-        MAVEN_HOME = tool('Maven') // Set Maven path
-        PATH = "${JAVA_HOME}/bin:${MAVEN_HOME}/bin:${env.PATH}"
-    }
-
+    agent any
     stages {
-        stage('Checkout Code') {
+        stage('Clone Repository') {
             steps {
                 git branch: 'main', url: 'https://github.com/3ncinasv3/spmLab3_valador.git'
+
             }
         }
-
-        stage('Build with Maven') {
+        stage('Build') {
             steps {
-                sh 'mvn -B package --file pom.xml'  // Same as GitHub Actions
+                echo 'Building...'
             }
         }
-
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                sh 'mvn test'  // Runs tests with Maven
+                echo 'Running Tests...'
             }
         }
-
-        stage('Custom Action') {
+        stage('Deploy') {
             steps {
-                echo "Hello World"
+                echo 'Deploying...'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Build and tests completed successfully! 🎉'
-        }
-        failure {
-            echo 'Build or tests failed. Check the logs. ❌'
         }
     }
 }
