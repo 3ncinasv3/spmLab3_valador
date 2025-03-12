@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/3ncinasv3/spmLab3_valador.git'
+                git branch: 'main', url: 'https://github.com/3ncinasv3/spmLab3_valador.git'
             }
         }
         stage('Build') {
